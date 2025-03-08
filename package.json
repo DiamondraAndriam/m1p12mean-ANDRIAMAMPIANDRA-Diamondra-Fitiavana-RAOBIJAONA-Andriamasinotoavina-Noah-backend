@@ -1,0 +1,33 @@
+{
+  "name": "m1p12mean-ANDRIAMAMPIANDRA-Diamondra-Fitiavana-RAOBIJAONA-Noah-backend",
+  "version": "1.0.0",
+  "description": "This is the Express/NodeJS API for the backend of our school project. <br>\r Our aim is to create a web application that help the client to get the best user experience for a garage service. We were focusing on the main works of a garage through different services and the supply system through different type of users.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiamondraAndriam/m1p12mean-ANDRIAMAMPIANDRA-Diamondra-Fitiavana-RAOBIJAONA-Noah-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DiamondraAndriam/m1p12mean-ANDRIAMAMPIANDRA-Diamondra-Fitiavana-RAOBIJAONA-Noah-backend/issues"
+  },
+  "homepage": "https://github.com/DiamondraAndriam/m1p12mean-ANDRIAMAMPIANDRA-Diamondra-Fitiavana-RAOBIJAONA-Noah-backend#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
