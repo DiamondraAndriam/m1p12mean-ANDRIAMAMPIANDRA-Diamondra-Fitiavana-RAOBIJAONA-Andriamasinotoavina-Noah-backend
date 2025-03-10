@@ -40,4 +40,4 @@ Add other endpoints as necessary.
 ## Group Members
 
 - ANDRIAMAMPIANDRA Diamondra Fitiavana - ETU001748
-- RAOBIJAONA Noah - ETU001873
+- RAOBIJAONA Andriamasiontoavina Noah - ETU001873
