@@ -1,13 +1,5 @@
 {
     "version": 2,
-    "build": {
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "commands": [
-        "npm install --force"
-      ]
-    },
     "routes": [
       {
         "src": "/(.*)",
