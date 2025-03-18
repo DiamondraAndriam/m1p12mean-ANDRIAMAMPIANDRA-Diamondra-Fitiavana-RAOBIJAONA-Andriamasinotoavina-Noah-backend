@@ -2,11 +2,10 @@
   "name": "m1p12mean-andriamampiandra-diamondra-fitiavana-raobijaona-andriamasinotoavina-noah-backend",
   "version": "1.0.0",
   "description": "This is the Express/NodeJS API for the backend of our school project. <br>\r Our aim is to create a web application that help the client to get the best user experience for a garage service. We were focusing on the main works of a garage through different services and the supply system through different type of users.",
-
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js", 
+    "start": "node server.js",
     "dev": "nodemon server.js"
   },
   "repository": {
