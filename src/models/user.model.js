@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
     device: { type: String },
     ip: { type: String },
     expiresAt: { type: Date }
-  }]
+  }],
+  active: { type: Boolean, default: true },
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {
