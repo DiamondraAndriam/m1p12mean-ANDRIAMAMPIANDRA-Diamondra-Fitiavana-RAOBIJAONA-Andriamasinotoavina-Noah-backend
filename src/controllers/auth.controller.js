@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Mot de passe incorrect' });
     }
 
-    const token = jwt.sign({ id: user._id, role: user.role, name: user.firstName }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: user.role, name: user.firstName }, process.env.JWT_SECRET, { expiresIn: '3h' });
 
     res.status(200).json({
       message: 'Connexion réussie',
