@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   address: { type: String },
   role: { type: String, required: true, enum: ['client', 'mecanicien', 'manager'] },
+  typeMecanicien: { type: String, enum: ['électricien', 'mecanicien', 'depanneur', 'nettoyeur', 'diagnosticien'] },
   refreshTokens: [{
     token: { type: String },
     device: { type: String },
