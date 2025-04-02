@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user.model");
 const router = express.Router();
 const protect = require('../middlewares/auth.middleware');
+const { envoyerConfirmation } = require('../controllers/confirmation.controller');
 
 router.get("/", protect, async (req, res) => {
     try {
@@ -40,5 +41,7 @@ router.delete("/:id", protect, async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 });
+
+router.post('/confirmation-rdv', envoyerConfirmation);
 
 module.exports = router;
