@@ -11,11 +11,12 @@ const reparationSchema = new mongoose.Schema({
     },
     piecesRemplacees: [
         {
-            nom: { type: String, required: true },
+            partId: { type: mongoose.Schema.Types.ObjectId, ref: "Part", required: true },
+            quantite: { type: Number, required: true },
             prix: { type: Number, required: true }
         }
     ],
-    statut: { type: String, enum: ["en cours", "terminé"], default: "en cours" },
+    statut: { type: String, enum: ["à faire", "terminé"], default: "à faire" },
     commentaire: { type: String },
     factureTotale: { type: Number, default: 0 },
 }, { timestamps: true });

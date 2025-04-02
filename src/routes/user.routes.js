@@ -1,17 +1,19 @@
 const express = require("express");
 const User = require("../models/user.model");
 const router = express.Router();
+const protect = require('../middlewares/auth.middleware');
 
-router.get("/", async (req, res) => {
+router.get("/", protect, async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Erreur serveur" });
     }
 });
 
-router.put("/:id/disable", async (req, res) => {
+router.put("/:id/disable", protect, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: "Utilisateur non trouvé" });
@@ -27,13 +29,14 @@ router.put("/:id/disable", async (req, res) => {
     }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protect, async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) return res.status(404).json({ message: "Utilisateur non trouvé" });
 
         res.json({ message: "Utilisateur supprimé avec succès" });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Erreur serveur" });
     }
 });
