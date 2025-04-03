@@ -9,12 +9,6 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   address: { type: String },
   role: { type: String, required: true, enum: ['client', 'mecanicien', 'manager'] },
-  refreshTokens: [{
-    token: { type: String },
-    device: { type: String },
-    ip: { type: String },
-    expiresAt: { type: Date }
-  }],
   active: { type: Boolean, default: true },
 }, { timestamps: true });
 

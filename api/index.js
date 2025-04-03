@@ -7,6 +7,7 @@ const userRoutes = require("../src/routes/user.routes");
 const reparationRoutes = require("../src/routes/reparation.routes");
 const partRoutes = require("../src/routes/part.routes");
 const protect = require('../src/middlewares/auth.middleware');
+const financeRoutes = require('../src/routes/finance.routes');
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/reparations", reparationRoutes);
 
 app.use("/api/parts", protect, partRoutes);
+
+app.use("/api/finance", protect, financeRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to MEAN backend');
