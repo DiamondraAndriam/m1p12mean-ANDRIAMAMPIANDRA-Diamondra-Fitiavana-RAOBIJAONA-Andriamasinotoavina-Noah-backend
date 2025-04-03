@@ -52,3 +52,5 @@ router.post("/", async (req, res) => {
         res.status(400).json({ message: "Erreur lors de la création", error });
     }
 });
+
+module.exports = router;
