@@ -5,10 +5,10 @@ const serviceSchema = new mongoose.Schema({
     description: { type: String, required: true },
     price: { type: Number, required: true },
     duration: { type: Number, required: true }, // Duration in minutes
-    category: { type: String, required: true },
+    category: { type: String},
     mecaniciens: [{
-        mecanicienId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        quantity: { type: Number, required: true }
+        type: { type: String, enum: ['électricien', 'mecanicien', 'depanneur', 'nettoyeur', 'diagnosticien'], required: true },
+        quantity: { type: Number, required: true }, _id: false
     }]
 }, { timestamps: true });
 
