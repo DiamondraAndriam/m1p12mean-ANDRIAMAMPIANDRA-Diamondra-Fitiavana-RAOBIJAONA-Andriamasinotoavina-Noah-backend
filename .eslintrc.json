@@ -1,0 +1,7 @@
+{
+    "extends": ["eslint:recommended", "plugin:promise/recommended"],
+    "rules": {
+      "no-console": "warn",
+      "promise/always-return": "error"
+    }
+  }  

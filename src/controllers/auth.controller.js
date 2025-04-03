@@ -1,6 +1,5 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 
 const registerUser = async (req, res) => {
   const { firstName, lastName, email, password, phone, address, role } = req.body;
@@ -35,6 +34,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Mot de passe incorrect' });
     }
 
+    // eslint-disable-next-line no-undef
     const token = jwt.sign({ id: user._id, role: user.role, name: user.firstName }, process.env.JWT_SECRET, { expiresIn: '3h' });
 
     res.status(200).json({

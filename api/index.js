@@ -8,6 +8,8 @@ const reparationRoutes = require("../src/routes/reparation.routes");
 const rendezvousRoutes = require("../src/routes/rendezvous.routes");
 const serviceRoutes = require("../src/routes/service.routes");
 const indisponibiliteRoutes = require("../src/routes/indisponibilite.routes");
+const partRoutes = require("../src/routes/part.routes");
+const protect = require('../src/middlewares/auth.middleware');
 
 dotenv.config();
 
@@ -31,10 +33,13 @@ app.use("/api/services", serviceRoutes);
 
 app.use("/api/indisponibilites", indisponibiliteRoutes);
 
+app.use("/api/parts", protect, partRoutes);
+
 app.get('/', (req, res) => {
   res.send('Welcome to MEAN backend');
 });
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
