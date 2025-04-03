@@ -5,6 +5,9 @@ const authRoutes = require('../src/routes/auth.routes');
 const cors = require('cors');
 const userRoutes = require("../src/routes/user.routes");
 const reparationRoutes = require("../src/routes/reparation.routes");
+const rendezvousRoutes = require("../src/routes/rendezvous.routes");
+const serviceRoutes = require("../src/routes/service.routes");
+const indisponibiliteRoutes = require("../src/routes/indisponibilite.routes");
 const partRoutes = require("../src/routes/part.routes");
 const protect = require('../src/middlewares/auth.middleware');
 
@@ -23,6 +26,12 @@ app.use('/api/auth', authRoutes);
 app.use("/api/users", userRoutes);
 
 app.use("/api/reparations", reparationRoutes);
+
+app.use("/api/rendezvous", rendezvousRoutes);
+
+app.use("/api/services", serviceRoutes);
+
+app.use("/api/indisponibilites", indisponibiliteRoutes);
 
 app.use("/api/parts", protect, partRoutes);
 
