@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/DiamondraAndriam/m1p12mean-ANDRIAMAMPIANDRA-Diamondra-Fitiavana-RAOBIJAONA-Andriamasinotoavina-Noah-backend#readme",
   "dependencies": {
+    "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
