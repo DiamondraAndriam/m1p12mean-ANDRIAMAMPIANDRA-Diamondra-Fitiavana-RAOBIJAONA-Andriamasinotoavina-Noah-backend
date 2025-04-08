@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Rendezvous = require("../models/rendezvous.model");
+const {updateDisponibilite} = require("../controllers/indisponibilite.controller");
 
 // ✅ Récupérer tous les rendez-vous d’un client
 router.get("/client/:clientId", async (req, res) => {
@@ -25,10 +26,10 @@ router.get("/mecanicien/:mecanicienId", async (req, res) => {
 // ✅ Ajouter un nouveau rendez-vous
 router.post("/", async (req, res) => {
     try {
-        const { clientId, mecaniciensId, serviceId, start, end, status, description } = req.body;
+        const { clientId, mecanicienId, serviceId, start, end, status, description } = req.body;
         const nouveauRendezvous = new Rendezvous({
             clientId,
-            mecaniciensId,
+            mecanicienId,
             serviceId,
             start,
             end,
@@ -36,6 +37,10 @@ router.post("/", async (req, res) => {
             description
         });
         await nouveauRendezvous.save();
+
+        // mise à jour des différentes disponibilités pendant ces heures
+        await updateDisponibilite(nouveauRendezvous);
+
         res.status(201).json(nouveauRendezvous);
     } catch (error) {
         res.status(400).json({ message: "Erreur lors de la création", error });
