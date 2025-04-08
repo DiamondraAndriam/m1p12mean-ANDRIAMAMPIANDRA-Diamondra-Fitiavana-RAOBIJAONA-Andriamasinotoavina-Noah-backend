@@ -1,7 +1,9 @@
 const Ferier = require('../models/ferier.model');
+const Indisponibilite = require('../models/indisponibilite.model');
 const IndisponibiliteDate = require('../models/indisponibiliteDate.model');
 const Service = require('../models/service.model');
 const RendezVous = require('../models/rendezvous.model');
+const HeureTravail = require('../models/heureTravail.model');
 const User = require('../models/user.model');
 
 exports.getDisponibiliteMois = async (req, res) => {
@@ -78,6 +80,67 @@ exports.getMecanisienDisponibilite = async (req, res) => {
         })); 
 
         res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur serveur", error });
+    }
+}
+
+function trouverHeureDispo(ouverture, fermeture, indisponibilites, duree) {
+    const plagesLibres = [];
+
+  // 1. Trier les RDVs
+  const rdvsTries = indisponibilites.sort((a, b) => a.debut - b.debut);
+
+  let currentTime = ouverture;
+
+  for (const rdv of rdvsTries) {
+    if (rdv.datedebut > currentTime) {
+      const plage = {
+        debut: currentTime,
+        fin: rdv.debut
+      };
+
+      if (plage.fin - plage.debut >= duree) {
+        plagesLibres.push(plage);
+      }
+    }
+    currentTime = new Date(Math.max(currentTime, rdv.fin));
+  }
+
+  // 2. Plage après le dernier RDV
+  if (currentTime < fermeture) {
+    const plage = { debut: currentTime, fin: fermeture };
+    if (plage.fin - plage.debut >= duree) {
+      plagesLibres.push(plage);
+    }
+  }
+
+  return plagesLibres;
+}
+
+exports.getHeureDispo = async (req, res) => {
+    const { serviceId, date } = req.body;
+    try {
+        const service = await Service.findById(serviceId);
+        if (!service) {
+            return res.status(404).json({ message: "Service non trouvé" });
+        }
+
+        const indisponibilite = await Indisponibilite.find({
+            service: serviceId,
+            date: date
+        });
+
+        const heureTravail = await HeureTravail.findOne();
+        
+        const heureDispo = trouverHeureDispo(
+            new Date(date + 'T' + heureTravail.debut),
+            new Date(date + 'T' + heureTravail.fin),
+            indisponibilite,
+            service.duree * 60 * 1000 // Durée du service en millisecondes
+        );
+
+        res.json(heureDispo);
     } catch (error) {
         res.status(500).json({ message: "Erreur serveur", error });
     }
