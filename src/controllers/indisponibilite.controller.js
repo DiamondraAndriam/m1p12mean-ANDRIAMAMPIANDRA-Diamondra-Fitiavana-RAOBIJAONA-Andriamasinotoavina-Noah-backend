@@ -1,6 +1,8 @@
 const Ferier = require('../models/ferier.model');
 const IndisponibiliteDate = require('../models/indisponibiliteDate.model');
 const Service = require('../models/service.model');
+const RendezVous = require('../models/rendezvous.model');
+const User = require('../models/user.model');
 
 exports.getDisponibiliteMois = async (req, res) => {
     const { serviceId, month, year } = req.body;
@@ -46,3 +48,37 @@ exports.getDisponibiliteMois = async (req, res) => {
     }
 }
 
+exports.getMecanisienDisponibilite = async (req, res) => {
+    const { serviceId, date, heureDebut} = req.params;
+    try {
+        const service = await Service.findById(serviceId);
+        if (!service) {
+            return res.status(404).json({ message: "Service non trouvé" });
+        }
+
+        const heureFin = new Date(date+service.duree*60*1000); // Ajout de la durée du service à l'heure de début
+
+        // Mécano occupés
+        const mecanoOccupes = await RendezVous.find({
+            datedebut: { $lt: heureFin },
+            datefin: { $gt: heureDebut }
+            }).distinct('idmecanicien');
+
+        // Mécano disponibles
+        const mecanicien = await User.find({ 
+            role: 'mecanicien',
+            _id: { $nin: mecanoOccupes },
+            'typeMecanicien': service.typeMecanicien
+        });
+
+        const data = mecanicien.map(m => ({
+            id: m._id,
+            nom: m.nom,
+            prenom: m.prenom
+        })); 
+
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur serveur", error });
+    }
+}
