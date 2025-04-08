@@ -1,21 +1,35 @@
 const express = require("express");
 const router = express.Router();
 const Reparation = require("../models/reparation.model");
+require("../models/service.model");
 const reparationController = require("../controllers/reparation.controller");
 const protect = require('../middlewares/auth.middleware');
 
 // ✅ Récupérer toutes les réparations d’un mécanicien
 router.get("/mecanicien/:mecanicienId", protect, async (req, res) => {
     try {
-        const reparations = await Reparation.find({ mecanicienId: req.params.mecanicienId })
-            .populate("piecesRemplacees.partId") // Popule toutes les données des pièces
-            .exec();
-
-        res.json(reparations);
+      const reparations = await Reparation.find()
+        .populate({
+          path: "rendezVousId",
+          populate: [
+            { path: "serviceId", select: "nom description temps_estime" },
+            { path: "clientId", select: "nom" }
+          ]
+        })
+        .populate("piecesRemplacees.partId")
+        .exec();
+  
+      // Tu filtres avec mecanicienId (pas mecaniciens)
+      const filtered = reparations.filter(reparation =>
+        reparation.rendezVousId?.mecanicienId?.toString() === req.params.mecanicienId
+      );
+  
+      res.json(filtered);
     } catch (error) {
-        res.status(500).json({ message: "Erreur serveur", error });
+      console.error(error);
+      res.status(500).json({ message: "Erreur serveur", error });
     }
-});
+  });  
 
 // ✅ Ajouter une nouvelle réparation
 router.post("/", protect, async (req, res) => {

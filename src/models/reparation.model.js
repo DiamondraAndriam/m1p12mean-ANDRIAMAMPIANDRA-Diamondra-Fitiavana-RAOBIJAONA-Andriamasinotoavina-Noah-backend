@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 
 const reparationSchema = new mongoose.Schema({
-    rendezVousId: { type: mongoose.Schema.Types.ObjectId, ref: "RendezVous", required: true },
-    mecanicienId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    rendezVousId: { type: mongoose.Schema.Types.ObjectId, ref: "Rendezvous", required: true },
     voiture: {
         marque: { type: String, required: true },
         modele: { type: String, required: true },
