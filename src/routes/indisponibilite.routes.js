@@ -6,7 +6,7 @@ const indisponibiliteController = require("../controllers/indisponibilite.contro
 router.get("/", indisponibiliteController.getDisponibiliteMois);
 
 // ✅ Récupérer mécanicien disponible pour un service donné
-router.get("/mecanicien", indisponibiliteController.getMecanisienDisponibilite);
+router.get("/mecanicien", indisponibiliteController.getMecanicienDisponibilite);
 
 // ✅ Récupérer les indisponibilités dans une journée donnée
 router.get("/jour", indisponibiliteController.getHeureDispo);
