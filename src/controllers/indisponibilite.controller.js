@@ -71,7 +71,7 @@ async function getMecanoDisponbles(service, heureDebut){
 
 // ✅ Récupérer les mécaniciens disponibles pour un service donné
 exports.getMecanicienDisponibilite = async (req, res) => {
-    const { serviceId, date, heureDebut} = req.params;
+    const { serviceId, date, heureDebut} = req.body;
     try {
         const service = await Service.findById(serviceId);
         if (!service) {
