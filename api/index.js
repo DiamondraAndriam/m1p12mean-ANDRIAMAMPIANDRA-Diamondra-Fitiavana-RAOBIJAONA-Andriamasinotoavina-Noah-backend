@@ -11,6 +11,8 @@ const indisponibiliteRoutes = require("../src/routes/indisponibilite.routes");
 const partRoutes = require("../src/routes/part.routes");
 const protect = require('../src/middlewares/auth.middleware');
 const financeRoutes = require('../src/routes/finance.routes');
+const ferierRoutes = require('../src/routes/calendar/ferier.routes');
+const daysoff = require('../src/routes/calendar/daysoff.routes');
 
 dotenv.config();
 
@@ -33,6 +35,10 @@ app.use("/api/rendezvous", rendezvousRoutes);
 app.use("/api/services", serviceRoutes);
 
 app.use("/api/indisponibilites", indisponibiliteRoutes);
+
+app.use("/api/ferier", ferierRoutes);
+
+app.use("/api/daysoff", daysoff);
 
 app.use("/api/parts", protect, partRoutes);
 

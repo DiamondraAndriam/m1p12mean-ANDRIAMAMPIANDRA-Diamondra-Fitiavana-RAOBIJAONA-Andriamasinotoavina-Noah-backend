@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Debut et fin sont mm date mais différents heures
 const indisponibiliteSchema = new mongoose.Schema({
     debut: { type: Date, required: true },
     fin: { 

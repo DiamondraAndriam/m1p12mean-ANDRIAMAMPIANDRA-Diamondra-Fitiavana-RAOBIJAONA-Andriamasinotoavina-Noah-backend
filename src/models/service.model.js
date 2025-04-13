@@ -28,6 +28,7 @@ const serviceSchema = new mongoose.Schema({
   },
   typeMecanicien: {
     type: String,
+    enum: ['électricien', 'mecanicien', 'depanneur', 'nettoyeur', 'diagnosticien'],
     required: true
   }
 });
