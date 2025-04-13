@@ -51,7 +51,7 @@ exports.getDisponibiliteMois = async (req, res) => {
 }
 
 async function getMecanoDisponbles(service, heureDebut){
-    const heureFin = new Date(heureDebut.getTime() + service.duree * 60 * 1000); // Ajout de la durée du service à l'heure de début
+    const heureFin = new Date(heureDebut.getTime() + service.temps_estime * 60 * 1000); // Ajout de la durée du service à l'heure de début
 
     // Mécano occupés
     const mecanoOccupes = await RendezVous.find({
@@ -177,7 +177,7 @@ exports.updateDisponibilite = async(rdv) => {
             const indisponibilite = new Indisponibilite({
                 service: service._id,
                 debut: start,
-                fin: start + service.duree*60*1000 
+                fin: start + service.temps_estime*60*1000 
             });
         
             const listIndisponibilites = await getIndisponibilite(ouverture, fermeture, service._id);
@@ -187,7 +187,7 @@ exports.updateDisponibilite = async(rdv) => {
                 ouverture,
                 fermeture,
                 indisponibilites,
-                service.duree * 60 * 1000 // Durée du service en millisecondes
+                service.temps_estime * 60 * 1000 // Durée du service en millisecondes
             );
 
             if(plagesLibres.length === 0) {
@@ -242,7 +242,7 @@ exports.heureDispo = async (serviceId, date) => {
             ouverture,
             fermeture,
             indisponibilites,
-            service.duree * 60 * 1000 // Durée du service en millisecondes
+            service.temps_estime * 60 * 1000 // Durée du service en millisecondes
         );
 
         return heureDispo;

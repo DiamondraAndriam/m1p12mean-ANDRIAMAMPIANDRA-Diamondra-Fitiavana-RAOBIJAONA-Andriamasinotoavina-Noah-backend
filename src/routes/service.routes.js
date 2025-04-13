@@ -25,17 +25,13 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-      const { name, description, price, duration } = req.body;
+      const { nom, description, prix, temps_estime, typeMecanicien } = req.body;
       const newService = new Service({
-          name,
+          nom,
           description,
-          price,
-          duration,
-          category: req.body.category,
-          mecaniciens: req.body.mecaniciens.map(mec => ({
-              type: mec.type,
-              quantity: mec.quantity
-          }))
+          prix,
+          temps_estime,
+          typeMecanicien
       });
       await newService.save();
       res.status(201).json(newService);
