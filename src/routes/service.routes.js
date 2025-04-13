@@ -40,4 +40,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+    try {
+        const { nom, description, prix, temps_estime, typeMecanicien } = req.body;
+        const service = await Service.findByIdAndUpdate(
+            req.params.id,
+            { nom, description, prix, temps_estime, typeMecanicien },
+            { new: true }
+        );
+        if (!service) {
+            return res.status(404).json({ message: "Service non trouvé" });
+        }
+        res.json(service);
+    } catch (error) {
+        res.status(400).json({ message: "Erreur lors de la mise à jour", error });
+    }
+});
+
 module.exports = router;
