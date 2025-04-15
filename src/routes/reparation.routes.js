@@ -29,7 +29,31 @@ router.get("/mecanicien/:mecanicienId", protect, async (req, res) => {
       console.error(error);
       res.status(500).json({ message: "Erreur serveur", error });
     }
-  });  
+  });
+  
+  // recuperer tous les reparations
+  router.get("/", protect, async (req, res) => {
+    try {
+      const reparations = await Reparation.find()
+        .populate({
+          path: "rendezVousId",
+          populate: [
+            { path: "serviceId", select: "nom description temps_estime" },
+            { path: "clientId", select: "nom" },
+            { path: "mecanicienId", select: "matricule" }
+          ]
+        })
+        .populate("piecesRemplacees.partId")
+        .exec();
+  
+      const filtered = reparations;
+  
+      res.json(filtered);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Erreur serveur", error });
+    }
+  });
 
 // ✅ Ajouter une nouvelle réparation
 router.post("/", protect, async (req, res) => {
