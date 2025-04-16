@@ -34,6 +34,10 @@ const rendezvousSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    reminderSent: { 
+      type: Boolean, 
+      default: false 
+    }
   },
   { timestamps: true }
 );

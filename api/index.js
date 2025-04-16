@@ -13,6 +13,7 @@ const protect = require('../src/middlewares/auth.middleware');
 const financeRoutes = require('../src/routes/finance.routes');
 const ferierRoutes = require('../src/routes/calendar/ferier.routes');
 const daysoff = require('../src/routes/calendar/daysoff.routes');
+require('../src/email/reminderScheduler');
 
 dotenv.config();
 
