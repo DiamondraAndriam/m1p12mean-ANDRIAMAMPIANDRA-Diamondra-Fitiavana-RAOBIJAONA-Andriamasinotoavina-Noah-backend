@@ -8,6 +8,7 @@ const reparationRoutes = require("../src/routes/reparation.routes");
 const partRoutes = require("../src/routes/part.routes");
 const protect = require('../src/middlewares/auth.middleware');
 const financeRoutes = require('../src/routes/finance.routes');
+require('../src/email/reminderScheduler');
 
 dotenv.config();
 
