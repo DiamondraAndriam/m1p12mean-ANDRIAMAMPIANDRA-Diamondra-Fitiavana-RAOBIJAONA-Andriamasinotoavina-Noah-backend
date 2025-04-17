@@ -18,11 +18,37 @@ router.get("/mecanicien/:mecanicienId", protect, async (req, res) => {
         })
         .populate("piecesRemplacees.partId")
         .exec();
+
+        const filtered = reparations.filter(reparation => {
+          return reparation.rendezVousId?.mecanicienId?.toString() === req.params.mecanicienId;
+        });
+  
+      res.json(filtered);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Erreur serveur", error });
+    }
+  });
+
+  // ✅ Récupérer toutes les réparations d’un client
+  router.get("/client/:id", protect, async (req, res) => {
+    try {
+      const reparations = await Reparation.find()
+        .populate({
+          path: "rendezVousId",
+          populate: [
+            { path: "serviceId", select: "nom description temps_estime" },
+            { path: "clientId", select: "_id nom" },
+            { path: "mecanicienId", select: "matricule" }
+          ]
+        })
+        .populate("piecesRemplacees.partId")
+        .exec();
   
       // Tu filtres avec mecanicienId (pas mecaniciens)
-      const filtered = reparations.filter(reparation =>
-        reparation.rendezVousId?.mecanicienId?.toString() === req.params.mecanicienId
-      );
+      const filtered = reparations.filter(reparation => {
+        return reparation.rendezVousId?.clientId?._id.toString() === req.params.id
+      });
   
       res.json(filtered);
     } catch (error) {

@@ -17,8 +17,6 @@ const transporter = nodemailer.createTransport({
 
 // Tâche CRON : toutes les heures
 cron.schedule('* * * * *', async () => {
-  console.log('📧 Vérification pour envoi de rappels par e-mail...');
-
   const rendezvousList = await rendezvousService.getRendezvousIn24h();
 
   for (let rdv of rendezvousList) {
