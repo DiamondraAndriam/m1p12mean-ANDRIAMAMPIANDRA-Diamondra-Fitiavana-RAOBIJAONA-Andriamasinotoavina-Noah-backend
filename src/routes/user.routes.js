@@ -41,4 +41,54 @@ router.delete("/:id", protect, async (req, res) => {
     }
 });
 
+const updateUser = async (req, res) => {
+    console.log('ato eeeee')
+    const { id } = req.params;
+    const {
+      matricule,
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      address,
+      role,
+      typeMecanicien,
+      active
+    } = req.body;
+  
+    try {
+      const user = await User.findById(id);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'Utilisateur non trouvé' });
+      }
+  
+      // Met à jour les champs seulement si les valeurs sont fournies
+      if (matricule) user.matricule = matricule;
+      if (firstName) user.firstName = firstName;
+      if (lastName) user.lastName = lastName;
+      if (email) user.email = email;
+      if (phone) user.phone = phone;
+      if (address) user.address = address;
+      if (role) user.role = role;
+      if (typeMecanicien) user.typeMecanicien = typeMecanicien;
+      if (typeof active === 'boolean') user.active = active;
+  
+      if (password) {
+        // Si le mot de passe change, on le hache manuellement ici
+        user.password = password;
+      }
+  
+      await user.save();
+  
+      res.status(200).json({ message: 'Utilisateur mis à jour avec succès' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erreur lors de la mise à jour de l’utilisateur' });
+    }
+  };
+
+  router.put('/:id', updateUser);
+
 module.exports = router;
