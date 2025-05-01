@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 
@@ -13,7 +14,17 @@ const registerUser = async (req, res) => {
     const user = new User({ firstName, lastName, email, password, phone, address, role });
     await user.save();
 
-    res.status(201).json({ message: 'Utilisateur créé avec succès' });
+    // Générer le token après enregistrement
+    const token = jwt.sign(
+      { id: user._id, role: user.role, name: user.firstName },
+      process.env.JWT_SECRET,
+      { expiresIn: '3h' }
+    );
+
+    res.status(201).json({
+      message: 'Inscription réussie et connexion automatique',
+      token
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erreur serveur' });
