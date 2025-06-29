@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
-  const { firstName, lastName, email, password, phone, address, role } = req.body;
+  const { matricule,firstName, lastName, email, password, phone, address, role, typeMecanicien } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'Utilisateur déjà existant' });
     }
 
-    const user = new User({ firstName, lastName, email, password, phone, address, role });
+    const user = new User({ matricule,firstName, lastName, email, password, phone, address, role, typeMecanicien });
     await user.save();
 
     // Générer le token après enregistrement
